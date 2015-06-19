@@ -1,5 +1,5 @@
 var React = require('react');
-var Picker = require('./Picker');
+var Picker = require('./components/Picker');
 
 var items = [
     {value: '1', label: 'Pizza'},

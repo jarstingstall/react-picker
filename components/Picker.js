@@ -1,8 +1,9 @@
 var React = require('react');
 var PickerSelect = require('./PickerSelect');
 var PickerList = require('./PickerList');
+var PickerFilter = require('./PickerFilter');
 
-require('./picker.scss');
+require('../styles/picker.scss');
 
 var Picker = React.createClass({
     render: function() {
@@ -10,6 +11,7 @@ var Picker = React.createClass({
             <div>
                 <PickerSelect items={this.props.items} />
                 <div className="picker-base">
+                    <PickerFilter />
                     <PickerList items={this.props.items} />
                 </div>
             </div>
