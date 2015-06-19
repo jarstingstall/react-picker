@@ -1,0 +1,202 @@
+// -----------------------------------------------------------------------------
+// Picker 
+// -----------------------------------------------------------------------------
+ 
+@import 'node_modules/bourbon/app/assets/stylesheets/bourbon';
+
+// variables
+$border-width: 1px;
+$picker-radius: 5px;
+$base-color: #e08132;
+$border-color: #e4e4e4;
+$border-color-hover: lighten($border-color, 7%);
+$border-color-active: darken($border-color, 5%);
+$base-size: 20px;
+$button-width: 30px;
+$picker-height: 50px;
+$dropdown-items: 4;
+$dropdown-height: $picker-height * $dropdown-items;
+
+// mixins
+@mixin picker-setup {
+    border-color: $border-color;
+    display: block;
+    float: left;
+    cursor: pointer;
+}
+@mixin picker-hidden {
+    //opacity: 0;
+    visibility: hidden;
+}
+@mixin picker-visible {
+    //opacity: 1;
+    visibility: visible;
+}
+@mixin temp-z {
+    position: relative;
+    z-index: 0;
+}
+
+// MVP - animations
+// -----------------------------------------------------------------------------
+$bounceBitch: cubic-bezier(1.000, -0.010, 0.000, 1.650);
+
+$picker-speed: 120ms;
+$picker-curve: $bounceBitch;
+
+@include keyframes(picker-scale-y) {
+  from {
+    @include transform(scaleY(0));
+  }
+  to {
+    @include transform(scaleY(1));
+  }
+}
+
+@mixin mvp-animate($keyframe, $speed, $curve) {
+  @include animation($keyframe $speed $curve);
+  @include animation-iteration-count(1);
+  @include animation-fill-mode(backwards);
+  @include transform(translate3d(0, 0, 0));
+}
+// -----------------------------------------------------------------------------
+// end of MVP - animations
+
+// layout
+select.picker {
+    display: none;
+}
+
+.picker-container {
+    display: inline-block;
+    position: relative;
+    outline: none;
+
+    @include user-select(none);
+    -webkit-touch-callout: none;
+}
+
+.picker-base {
+    border: $border-width solid $border-color;
+    border-right: none;
+    border-left: none;
+    font-size: $base-size;
+    height: $picker-height;
+    line-height: $picker-height;
+    position: relative;
+    background-color: white;
+    @include picker-setup;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.picker-choices {
+    @include picker-hidden;
+    position: relative;
+    border-top: $border-width solid $border-color-active;
+    border-bottom: $border-width solid $border-color-active;
+    padding: 0;
+    z-index: 5000;
+    max-height: $dropdown-height;
+    overflow: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    li {
+        position: relative;
+        text-align: center;
+        padding: 0 $button-width;
+        list-style: none;
+        background-color: lighten($border-color, 3%);
+        &:hover, &:focus {            
+            background-color: $border-color-hover;
+        }        
+        &:active {            
+            background-color: $border-color-active;
+        }
+    }
+    .picker-hover {
+        background-color: $border-color-hover;
+    }
+}
+
+.picker-current-label {
+    @include picker-hidden;
+    display: block;
+    padding: 0 $button-width;
+    text-align: center;
+    line-height: $picker-height - $border-width*2;
+    
+  
+    &:hover, &:focus {
+      border-color: $border-color;
+      background-color: $border-color-hover;
+    }
+}
+
+.picker-filter {
+    height: $picker-height - $border-width * 2;
+    display: block;
+    position: absolute;
+    border: 0;
+    width: 100%;
+    padding: 0 $button-width;
+    text-align: center;
+    z-index: -10;
+}
+
+.picker-btn {
+    width: $button-width;
+    height: $picker-height;
+    line-height: $picker-height;
+    float: left;
+    display: block;
+    border: $border-width solid $border-color;
+    background-size: 7px 14px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: white;
+    outline: none !important; // hide outline in ie11
+    @include picker-setup;
+
+    &:hover, &:focus {
+        background-color: $border-color-hover;
+    }
+    &:active {
+        $active-color: $border-color-active;
+        border-color: $active-color;
+        background-color: $active-color;
+    }
+}
+
+.picker-prev {
+    border-radius: $picker-radius 0 0 $picker-radius;
+    background-image: url('images/arrow-left.svg');
+    &:hover, &:focus {
+        background-image: url('images/arrow-left.svg');    
+    }
+    &:active {
+        background-image: url('images/arrow-left-hover.svg');    
+    }
+}
+
+.picker-next {
+    border-radius: 0 $picker-radius $picker-radius 0;
+    background-image: url('images/arrow-right.svg');
+    &:hover, &:focus {
+        background-image: url('images/arrow-right.svg');    
+    }
+    &:active {
+        background-image: url('images/arrow-right-hover.svg');    
+    }
+}
+.picker-choices.picker-animate {
+    @include transform-origin(0 top); 
+    @include mvp-animate(picker-scale-y, $picker-speed, $picker-curve);
+}
+.picker-open {
+    // keep this at the bottom to overide visibilty
+    @include picker-visible;
+}
