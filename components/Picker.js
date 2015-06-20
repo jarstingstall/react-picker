@@ -11,7 +11,7 @@ require('../styles/picker.scss');
 var Picker = React.createClass({
     getInitialState: function() {
         return {
-            selectedItem: this.props.items[2],
+            selectedItem: this.props.items[0],
             open: false
         };
     },
@@ -42,6 +42,10 @@ var Picker = React.createClass({
         this.refs.pickerList.getDOMNode().scrollTop = height * index;
     },
     
+    componentDidMount: function() {
+        this.refs.pickerList.getDOMNode().style.width = this.refs.pickerContainer.getDOMNode().clientWidth + 'px';
+    },
+
     render: function() {
         return (
             <div>
@@ -49,7 +53,7 @@ var Picker = React.createClass({
                 <div className="picker-container" id="picker-container" ref="pickerContainer">
                     <PickerPrevButton />
                     <div className="picker-base">
-                        <PickerFilter ref="pickerFilter" />
+                        <PickerFilter ref="pickerFilter" setSelectedItem={this.setSelectedItem} />
                         <PickerLabel text={this.state.selectedItem.label} openDropDown={this.openDropDown} ref="pickerLabel"/>
                         <PickerList items={this.props.items} setSelectedItem={this.setSelectedItem} closeDropDown={this.closeDropDown} ref="pickerList"/>
                     </div>
