@@ -41,12 +41,12 @@ var Picker = React.createClass({
         var height = this.refs.pickerList.getDOMNode().children[index].offsetHeight;
         this.refs.pickerList.getDOMNode().scrollTop = height * index;
     },
-
+    
     render: function() {
         return (
             <div>
                 <PickerSelect items={this.props.items} selectedItem={this.state.selectedItem.value} ref="pickerSelect"/>
-                <div className="picker-container">
+                <div className="picker-container" id="picker-container" ref="pickerContainer">
                     <PickerPrevButton />
                     <div className="picker-base">
                         <PickerFilter ref="pickerFilter" />
