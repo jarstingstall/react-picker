@@ -53,7 +53,7 @@ var Picker = React.createClass({
                 <div className="picker-container" id="picker-container" ref="pickerContainer">
                     <PickerPrevButton />
                     <div className="picker-base">
-                        <PickerFilter ref="pickerFilter" setSelectedItem={this.setSelectedItem} />
+                        <PickerFilter ref="pickerFilter" />
                         <PickerLabel text={this.state.selectedItem.label} openDropDown={this.openDropDown} ref="pickerLabel"/>
                         <PickerList items={this.props.items} setSelectedItem={this.setSelectedItem} closeDropDown={this.closeDropDown} ref="pickerList"/>
                     </div>

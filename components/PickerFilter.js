@@ -4,7 +4,7 @@ var List = require('list.js/dist/list.js');
 var PickerFilter = React.createClass({
     render: function() {
         return (
-            <input type="text" autoComplete="off" className="picker-filter search"/>
+            <input type="text" autoComplete="off" className="picker-filter"/>
         );
     },
 
@@ -15,7 +15,7 @@ var PickerFilter = React.createClass({
             listClass: 'picker-choices' 
         });
     }
-    
+
 });
 
 module.exports = PickerFilter;
