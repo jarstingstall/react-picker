@@ -27,11 +27,11 @@ var Picker = React.createClass({
         });
         this.closeDropDown();
         this.toggleHover(item);
+        this.scrollToListItem(item);
     },
 
     openDropDown: function() {
         this.setState({open: true});
-        this.scrollToListItem();
         this.refs.pickerList.getDOMNode().classList.add('picker-open', 'picker-animate');
         var filter = this.refs.pickerFilter.getDOMNode();
         filter.style.zIndex = 0;
@@ -46,10 +46,8 @@ var Picker = React.createClass({
         this.filterList.search();
     },
 
-    scrollToListItem: function() {
-        var index = this.refs.pickerSelect.getDOMNode().selectedIndex;
-        var height = this.refs.pickerList.getDOMNode().children[index].offsetHeight;
-        this.refs.pickerList.getDOMNode().scrollTop = height * index;
+    scrollToListItem: function(item) {
+        this.refs.pickerList.getDOMNode().scrollTop = item.offsetHeight * item.getAttribute('data-position');
     },
     
     toggleHover: function(item) {
@@ -81,18 +79,17 @@ var Picker = React.createClass({
             <div>
                 <PickerSelect items={this.props.items} selectedItem={this.state.selectedItem.value} ref="pickerSelect"/>
                 <div className="picker-container" id="picker-container" ref="pickerContainer">
-                    <PickerPrevButton />
                     <div className="picker-base">
                         <PickerFilter 
                             ref="pickerFilter" 
                             filterList={this.filterList} 
                             toggleHover={this.toggleHover} 
                             setSelectedItem={this.setSelectedItem} 
-                            closeDropDown={this.closeDropDown} />
+                            closeDropDown={this.closeDropDown} 
+                            scrollToListItem={this.scrollToListItem} />
                         <PickerLabel text={this.state.selectedItem.label} openDropDown={this.openDropDown} ref="pickerLabel"/>
                         <PickerList items={this.props.items} setSelectedItem={this.setSelectedItem} ref="pickerList"/>
                     </div>
-                    <PickerNextButton />
                 </div>
             </div>
         );

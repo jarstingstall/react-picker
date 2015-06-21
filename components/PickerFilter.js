@@ -21,12 +21,20 @@ var PickerFilter = React.createClass({
     handleKeyDown: function(e) {
         if (e.keyCode === 38) { // up
             e.preventDefault();
-            self.decrementListItem();
+            var active = document.querySelector('.picker-hover');
+            if (active.previousElementSibling) {
+                this.props.toggleHover(active.previousElementSibling);
+                this.props.scrollToListItem(active.previousElementSibling);
+            }
         } else if (e.keyCode === 40) { // down
             e.preventDefault();
-            self.incrementListItem();
+            var active = document.querySelector('.picker-hover');
+            if (active.nextElementSibling) {
+                this.props.toggleHover(active.nextElementSibling);
+                this.props.scrollToListItem(active.nextElementSibling);
+            }
         } else if (e.keyCode === 13) { // enter
-            this.props.setSelectedItem(this.props.filterList.matchingItems[0].elm);
+            this.props.setSelectedItem(document.querySelector('.picker-hover'));
         } else if (e.keyCode === 27) { // esc
             this.props.closeDropDown();
         }
