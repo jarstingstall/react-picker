@@ -4,7 +4,14 @@ var React = require('react');
 var PickerFilter = React.createClass({
     render: function() {
         return (
-            <input type="text" autoComplete="off" className="picker-filter" onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp}/>
+            <input 
+                type="text" 
+                autoComplete="off" 
+                className="picker-filter" 
+                onKeyDown={this.handleKeyDown} 
+                onKeyUp={this.handleKeyUp} 
+                onFocus={this.props.openDropDown} 
+                onBlur={this.handleBlur} />
         );
     },
 
@@ -38,6 +45,10 @@ var PickerFilter = React.createClass({
         } else if (e.keyCode === 27) { // esc
             this.props.closeDropDown();
         }
+    },
+
+    handleBlur: function() {
+        this.props.setSelectedItem(document.querySelector('.picker-hover'));
     }
 
 });

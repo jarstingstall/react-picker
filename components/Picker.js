@@ -100,7 +100,8 @@ var Picker = React.createClass({
                             toggleHover={this.toggleHover} 
                             setSelectedItem={this.setSelectedItem} 
                             closeDropDown={this.closeDropDown} 
-                            scrollToListItem={this.scrollToListItem} />
+                            scrollToListItem={this.scrollToListItem} 
+                            openDropDown={this.openDropDown} />
                         <PickerLabel text={this.state.selectedItem.label} openDropDown={this.openDropDown} ref="pickerLabel"/>
                         <PickerList items={this.props.items} setSelectedItem={this.setSelectedItem} ref="pickerList"/>
                     </div>
