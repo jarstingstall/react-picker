@@ -20,6 +20,12 @@ var Picker = React.createClass({
         };
     },
 
+    getDefaultProps: function() {
+        return { 
+            arrows: true 
+        }
+    },
+
     setSelectedItem: function(item) {
         this.setState({
             selectedItem: this.props.items[item.getAttribute('data-position')], 
@@ -76,10 +82,17 @@ var Picker = React.createClass({
     },
 
     render: function() {
+        var prevButton, nextButton;
+        if (this.props.arrows) {
+            prevButton = <PickerPrevButton setSelectedItem={this.setSelectedItem} />;
+            nextButton = <PickerNextButton setSelectedItem={this.setSelectedItem} />;
+        }
+
         return (
             <div>
                 <PickerSelect items={this.props.items} selectedItem={this.state.selectedItem.value} ref="pickerSelect"/>
                 <div className="picker-container" id="picker-container" ref="pickerContainer">
+                {prevButton}
                     <div className="picker-base">
                         <PickerFilter 
                             ref="pickerFilter" 
@@ -91,6 +104,7 @@ var Picker = React.createClass({
                         <PickerLabel text={this.state.selectedItem.label} openDropDown={this.openDropDown} ref="pickerLabel"/>
                         <PickerList items={this.props.items} setSelectedItem={this.setSelectedItem} ref="pickerList"/>
                     </div>
+                {nextButton}
                 </div>
             </div>
         );
