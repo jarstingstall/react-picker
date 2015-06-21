@@ -62,6 +62,13 @@ var Picker = React.createClass({
 
     componentDidMount: function() {
         this.refs.pickerList.getDOMNode().style.width = this.refs.pickerContainer.getDOMNode().clientWidth + 'px';
+        var listItems = this.refs.pickerList.getDOMNode().children;
+        for (var i = 0; i < listItems.length; i++) {
+            if (listItems[i].firstElementChild.textContent === this.state.selectedItem.label) {
+                listItems[i].classList.add('picker-hover');
+                break;
+            }
+        }
         this.filterList = new List('picker-container', { 
             searchClass: "picker-filter",
             valueNames: ['picker-option'],
@@ -76,7 +83,12 @@ var Picker = React.createClass({
                 <div className="picker-container" id="picker-container" ref="pickerContainer">
                     <PickerPrevButton />
                     <div className="picker-base">
-                        <PickerFilter ref="pickerFilter" filterList={this.filterList} setSelectedItem={this.setSelectedItem} />
+                        <PickerFilter 
+                            ref="pickerFilter" 
+                            filterList={this.filterList} 
+                            toggleHover={this.toggleHover} 
+                            setSelectedItem={this.setSelectedItem} 
+                            closeDropDown={this.closeDropDown} />
                         <PickerLabel text={this.state.selectedItem.label} openDropDown={this.openDropDown} ref="pickerLabel"/>
                         <PickerList items={this.props.items} setSelectedItem={this.setSelectedItem} ref="pickerList"/>
                     </div>
