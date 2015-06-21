@@ -64,6 +64,7 @@ var Picker = React.createClass({
         for (var i = 0; i < listItems.length; i++) {
             if (listItems[i].firstElementChild.textContent === this.state.selectedItem.label) {
                 listItems[i].classList.add('picker-hover');
+                this.scrollToListItem(listItems[i]);
                 break;
             }
         }
